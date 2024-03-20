@@ -16,25 +16,35 @@
         <h2 id="tempoText">Tempo: </h2>
     </div>
     <ol id="questaoCorpo">
-        <h4 id="quest">Questão Número X</h4>
-        <li>
-            <input type="radio" id="butR1" oninput="radioActive(this)" disabled>
-            <label for="butR1" id="r1">Resposta 1</label> <!-- Label extende o tamanho do input, facilitando o clique -->
-        </li>
-        <li>
-            <input type="radio" id="butR2" oninput="radioActive(this)" disabled>
-            <label for="butR2" id="r2">Resposta 2</label>
-        </li>
-        <li>
-            <input type="radio" id="butR3" oninput="radioActive(this)" disabled>
-            <label for="butR3" id="r3">Resposta 3</label>
-        </li>
-        <li>
-            <input type="radio" id="butR4" oninput="radioActive(this)" disabled>
-            <label for="butR4" id="r4">Resposta 4</label>
-        </li>
-        <button type="button" id="butNext" onclick="radioActive(this)">Próxima questão</button>
-        <button type="button" id="butReset" onclick="resetQuests(this)">Reset</button>
+        <div id="questDiv">
+            <h4 id="quest">Questão Número X</h4>
+        </div>
+        <div id="liContainer">
+            <div id="liBox1" class="liBox">
+                <li>
+                    <input type="radio" id="butR1" oninput="radioActive(this)">
+                    <label for="butR1" id="r1">Resposta 1</label>
+                </li>
+                <li>
+                    <input type="radio" id="butR2" oninput="radioActive(this)">
+                    <label for="butR2" id="r2">Resposta 2</label>
+                </li>
+            </div>
+            <div id="liBox2" class="liBox">
+                <li>
+                    <input type="radio" id="butR3" oninput="radioActive(this)">
+                    <label for="butR3" id="r3">Resposta 3</label>
+                </li>
+                <li>
+                    <input type="radio" id="butR4" oninput="radioActive(this)">
+                    <label for="butR4" id="r4">Resposta 4</label>
+                </li>
+            </div>
+        </div>
+        <div id="buttonsDiv">
+            <button type="button" id="butNext" onclick="radioActive(this)">Próxima questão</button>
+            <button type="button" id="butReset" onclick="resetQuests(this)">Reset</button>
+        </div>
     </ol>
     <p id="result"></p>
     <script src="script.js"></script>

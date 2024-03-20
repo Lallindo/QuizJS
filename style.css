@@ -29,11 +29,18 @@ h1 {
 }
 
 #questaoCorpo {
+    width: 400px;
     display: flex;
     flex-direction: column;
     margin-top: 30px;
     padding-inline-start: 0px;
     font-size: 25px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+#questDiv h4{
+    border-bottom: 1px solid black;
 }
 
 li {
@@ -42,12 +49,24 @@ li {
     list-style: none;
 }
 
-li input {
+#liContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.liBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input {
     width: 0px;
     visibility: hidden;
 }
 
-li label {
+label {
     border: 2px solid black;
     border-radius: 10px;
     margin: 5px;
@@ -62,4 +81,20 @@ label:hover {
 
 #questaoCorpo button {
     margin: 10px;
+}
+
+button {
+    min-width: 130px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+#buttonsDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#result {
+    font-size: 30px;
 }

@@ -10,18 +10,23 @@ var questoes = [ // Mais questões podem ser adicionadas para aumentar o quiz.
     ['Quanto é 30 * 2?'], // Q3
     ['Quanto é 2^5?'], // Q4
     ['Quanto é 3√16?'], // Q5
-    ['Quanto é 10*5+2'] // Q6
-]
+    ['Quanto é 10*5+2?'], // Q6
+    ['Quanto é 5^3?'], // Q7
+    ['Quanto é √625?'] // Q8
+] // Devem haver, em qualquer momento, pelo menos 3 questões no quiz.
 
 var respostas = [ // As repostas, em ordem, das questões acima. 
-    ['8', '10', '15', '12'], // R1 Corr: index 1
+    ['10', '8', '15', '12'], // R1 Corr: index 1
     ['5', '3', '2,5', '3,5'], // R2 Corr: index 3 
     ['30', '90', '60', '65'], // R3 Corr: index 2 
     ['128', '32', '64', '16'], // R4 Corr: index 1 
     ['12', '16', '9', '4'], // R5 Corr: index 0 
-    ['50', '52', '70', '55'] // R6 Corr: index 0 
+    ['50', '52', '70', '55'], // R6 Corr: index 0 
+    ['25', '5', '625', '125'], // R7 Corr: index 3
+    ['5', '24', '25', '30'] // R8 Corr: index 2
+
 ]
-var respsCorretas = [2, 4, 3, 2, 1, 2]; // Alternativas corretas de cada questão.
+var respsCorretas = [1, 4, 3, 2, 1, 2, 4, 3]; // Alternativas corretas de cada questão.
 
 var respsChecked = []; // Array que terá as alternativas clicadas.
 var acertos = 0; // Quantidade de acertos.
@@ -41,10 +46,12 @@ function radioActive(input) { // Ativa e desativa os 'Radios', envia os dados ne
             document.getElementById('butR' + i).disabled = false;
             document.getElementById('butR' + i).checked = false;
             document.getElementById('r' + i).style.borderColor = 'black';
+            buttonElement.disabled = true; // Desabilita o botão para que o usuário não pule uma questão.
         }
         changeQuest(input);
         buttonElement.innerHTML = 'Próxima questão'
     } else { // Se a função for chamada por um Radio, ela desativa os outros radios para não haver mais de uma resposta.
+        buttonElement.disabled = false;
         for (i = 1; i <= 4; i++) {
             document.getElementById('butR' + i).disabled = true; // Desabilita todos os radios.
         }
@@ -111,7 +118,7 @@ function timeLimit() { // Passa o tempo para que haja um limite.
         document.getElementById('tempoText').innerHTML = 'Tempo: ' + tempoPassado;
         if (tempoPassado === 0) // Se o tempo restante for 0 ele parará o timer.
         {
-            pararTempo = true;
+            endGame();
         }
         if (pararTempo === true) { // Se o timer acabar ou o endGame() trocar a var pararTempo para true, o timer irá parar.
             clearInterval(idTimer);
@@ -122,28 +129,17 @@ function timeLimit() { // Passa o tempo para que haja um limite.
 function endMessage() { // Mensagem final com o resultado em uma mensagem.
     resultElement.style.fontSize = '30px';
 
-    if (acertos >= 5) {
-        resultElement.style.color = 'green';
-    } else if ((acertos >= 3) && (acertos < 5)) {
-        resultElement.style.color = 'orange';
-    } else {
+    if (acertos == 0) {
+        resultElement.innerHTML = "Você não acertou nenhuma questão!";
         resultElement.style.color = 'red';
-    }
-
-    switch (acertos) {
-        case 0: resultElement.innerHTML = "Você não acertou nenhuma questão!";
-            break;
-        case 1: resultElement.innerHTML = "Você acertou apenas 1(uma) questão!";
-            break;
-        case 2: resultElement.innerHTML = "Você acertou 2(duas) questões!";
-            break;
-        case 3: resultElement.innerHTML = "Você acertou 3(três) questões!";
-            break;
-        case 4: resultElement.innerHTML = "Você acertou 4(quatro) questões!";
-            break;
-        case 5: resultElement.innerHTML = "Quase! Você acertou 5(cinco) questões!";
-            break;
-        case 6: resultElement.innerHTML = "Parabéns! Você acertou todas as questões!";
-            break;
+    } else if (acertos < (questoes.length - 1)) {
+        resultElement.innerHTML = "Você acertou " + acertos + " questões!";
+        resultElement.style.color = '#DEA90D';
+    } else if (acertos == questoes.length - 1) {
+        resultElement.innerHTML = "Quase! Você acertou " + acertos + " questões!";
+        resultElement.style.color = 'green';
+    } else {
+        resultElement.innerHTML = "Parabéns! Você acertou todas as questões!";
+        resultElement.style.color = 'green';
     }
 }
