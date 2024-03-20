@@ -1,5 +1,6 @@
 var questaoAtual = 0;
 var buttonElement = document.getElementById('butNext');
+buttonElement.innerHTML = 'Iniciar';
 var buttonResetElement = document.getElementById('butReset');
 var resultElement = document.getElementById('result');
 
@@ -39,8 +40,10 @@ function radioActive(input) { // Ativa e desativa os 'Radios', envia os dados ne
         for (i = 1; i <= 4; i++) { // Ativa todos os 'Radios'
             document.getElementById('butR' + i).disabled = false;
             document.getElementById('butR' + i).checked = false;
+            document.getElementById('r' + i).style.borderColor = 'black';
         }
         changeQuest(input);
+        buttonElement.innerHTML = 'Próxima questão'
     } else { // Se a função for chamada por um Radio, ela desativa os outros radios para não haver mais de uma resposta.
         for (i = 1; i <= 4; i++) {
             document.getElementById('butR' + i).disabled = true; // Desabilita todos os radios.
@@ -73,6 +76,13 @@ function checkCorrect() { // Checa para ver se a alternativa clicada foi correta
         resultElement.innerHTML = 'Errou';
         resultElement.style.color = 'red';
     }
+    for (i = 1; i <= 4; i++) {
+        if (i == respsCorretas[questaoAtual - 1]) {
+            document.getElementById('r' + i).style.borderColor = 'green';
+        } else {
+            document.getElementById('r' + i).style.borderColor = 'red';
+        }
+    }
     console.log(checked, respsCorretas[questaoAtual - 1]);
     checked = []; // Zera o array usado para que ele possa ser reutilizado sem guardar as informações para sempre.
     console.log(questaoAtual);
@@ -81,13 +91,13 @@ function checkCorrect() { // Checa para ver se a alternativa clicada foi correta
 
 function endGame() { // Função disabilita os botões pela quantidade de questões passadas ou pelo tempo.
     if (questaoAtual == questoes.length || tempoPassado == 0) { // Se uma das condições for verdadeira ele para o jogo.
-        alert('Você acertou ' + acertos + ' questões');
         pararTempo = true; // Para o timer no tempo que o jogo for terminado.
         for (i = 1; i <= 4; i++) { // Desabilita os radios.
             document.getElementById('butR' + i).disabled = true;
             document.getElementById('butR' + i).checked = false;
         }
         buttonElement.disabled = true; // Desabilita o botão.
+        endMessage(); // Chama a mensagem de fim de jogo.
     }
 }
 
@@ -107,4 +117,33 @@ function timeLimit() { // Passa o tempo para que haja um limite.
             clearInterval(idTimer);
         }
     }, 1000)
+}
+
+function endMessage() { // Mensagem final com o resultado em uma mensagem.
+    resultElement.style.fontSize = '30px';
+
+    if (acertos >= 5) {
+        resultElement.style.color = 'green';
+    } else if ((acertos >= 3) && (acertos < 5)) {
+        resultElement.style.color = 'orange';
+    } else {
+        resultElement.style.color = 'red';
+    }
+
+    switch (acertos) {
+        case 0: resultElement.innerHTML = "Você não acertou nenhuma questão!";
+            break;
+        case 1: resultElement.innerHTML = "Você acertou apenas 1(uma) questão!";
+            break;
+        case 2: resultElement.innerHTML = "Você acertou 2(duas) questões!";
+            break;
+        case 3: resultElement.innerHTML = "Você acertou 3(três) questões!";
+            break;
+        case 4: resultElement.innerHTML = "Você acertou 4(quatro) questões!";
+            break;
+        case 5: resultElement.innerHTML = "Quase! Você acertou 5(cinco) questões!";
+            break;
+        case 6: resultElement.innerHTML = "Parabéns! Você acertou todas as questões!";
+            break;
+    }
 }
